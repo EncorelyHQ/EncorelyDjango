@@ -15,11 +15,13 @@
             <div class="form-group">
                 <label for="reg-username" class="form-label">Usuario</label>
                 <input type="text" id="reg-username" class="form-control" required>
+                <div class="invalid-feedback" id="error-username"></div>
             </div>
             
             <div class="form-group">
                 <label for="reg-email" class="form-label">Email</label>
                 <input type="email" id="reg-email" class="form-control" required>
+                <div class="invalid-feedback" id="error-email"></div>
             </div>
             
             <div class="form-group">
@@ -32,6 +34,7 @@
                 <select id="reg-department" class="form-control" required style="background-color: var(--color-bg-dark);">
                     <option value="">Cargando departamentos...</option>
                 </select>
+                <div class="invalid-feedback" id="error-department"></div>
             </div>
             
             <div class="form-group">
@@ -39,6 +42,7 @@
                 <select id="reg-city" class="form-control" required style="background-color: var(--color-bg-dark);" disabled>
                     <option value="">Selecciona un departamento primero</option>
                 </select>
+                <div class="invalid-feedback" id="error-city"></div>
             </div>
 
             <div class="form-group">
@@ -54,6 +58,7 @@
             <div class="form-group">
                 <label for="reg-password" class="form-label">Contraseña</label>
                 <input type="password" id="reg-password" class="form-control" required>
+                <div class="invalid-feedback" id="error-password"></div>
             </div>
             
             <div class="form-group">

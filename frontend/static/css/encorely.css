@@ -89,6 +89,7 @@ a:hover {
     font-weight: 800;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
 }
@@ -336,4 +337,61 @@ a:hover {
     font-size: 0.9rem;
     color: var(--color-text-secondary);
     margin-bottom: 0.5rem;
+}
+
+/* Mensajes de Error en Campos */
+.invalid-feedback {
+    display: none;
+    color: var(--color-neon-pink);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    padding-left: 0.25rem;
+}
+
+.form-control.is-invalid {
+    border-color: var(--color-neon-pink);
+    box-shadow: 0 0 0 2px rgba(255, 0, 127, 0.2);
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.toast {
+    background: var(--color-bg-panel);
+    border-left: 4px solid var(--color-neon-blue);
+    color: var(--color-text-primary);
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-panel);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 300px;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.toast.error {
+    border-left-color: var(--color-neon-pink);
+}
+
+.toast.success {
+    border-left-color: var(--color-neon-green);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
