@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Auto-eliminar después de 4 segundos
         setTimeout(() => {
-            toast.style.animation = 'fadeOut 0.5s ease-out forwards';
+            toast.style.animation = 'toastFadeOut 0.5s ease-out forwards';
             setTimeout(() => toast.remove(), 500);
         }, 4000);
     };
