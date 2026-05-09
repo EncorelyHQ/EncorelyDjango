@@ -162,7 +162,7 @@
             "header": [
               { "key": "Authorization", "value": "Bearer {{access}}" }
             ],
-            "url": "{{base_url}}/api/events/events/?city=Medellín&date_from=2026-06-01"
+            "url": "{{base_url}}/api/events/?city=Medellín&date_from=2026-06-01"
           }
         },
         {
@@ -172,7 +172,7 @@
             "header": [
               { "key": "Authorization", "value": "Bearer {{access}}" }
             ],
-            "url": "{{base_url}}/api/events/events/{{event_id}}/"
+            "url": "{{base_url}}/api/events/{{event_id}}/"
           }
         },
         {
@@ -187,7 +187,7 @@
               "mode": "raw",
               "raw": "{\n  \"has_ticket\": false\n}"
             },
-            "url": "{{base_url}}/api/events/events/{{event_id}}/attend/"
+            "url": "{{base_url}}/api/events/{{event_id}}/attend/"
           }
         },
         {
@@ -197,7 +197,7 @@
             "header": [
               { "key": "Authorization", "value": "Bearer {{access}}" }
             ],
-            "url": "{{base_url}}/api/events/events/{{event_id}}/attendees/"
+            "url": "{{base_url}}/api/events/{{event_id}}/attendees/"
           }
         }
       ]
