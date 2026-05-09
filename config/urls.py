@@ -7,6 +7,7 @@ Conecta las rutas de todas las apps y la documentación Swagger.
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
@@ -14,6 +15,11 @@ from drf_spectacular.views import (
 )
 
 urlpatterns = [
+    # ── Frontend Views ─────────────────────────────────
+    path('', TemplateView.as_view(template_name='login.html'), name='home'),
+    path('login/', TemplateView.as_view(template_name='login.html'), name='frontend-login'),
+    path('register/', TemplateView.as_view(template_name='register.html'), name='frontend-register'),
+
     # ── Admin ──────────────────────────────────────────
     path('admin/', admin.site.urls),
 
