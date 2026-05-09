@@ -22,6 +22,7 @@ class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
     permission_classes = [IsAdminOrReadOnly]
+    pagination_class = None  # Deshabilitar paginación para cargar todas las canciones en el swipe
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'artist_name']
     ordering_fields = ['energy', 'danceability', 'valence', 'tempo']
