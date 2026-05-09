@@ -1,5 +1,7 @@
 import numpy as np
 
+CERTIFIED_COMPATIBILITY_THRESHOLD = 0.70
+
 class VibeCalculator:
     """
     Calculador de compatibilidad musical basado en Similitud del Coseno.
@@ -49,9 +51,9 @@ class VibeCalculator:
     @staticmethod
     def is_compatible(score: float) -> bool:
         """
-        Determina si un score cumple el umbral mínimo (70%).
+        Determina si un score cumple el umbral mínimo.
         """
-        return score >= 0.70
+        return score >= CERTIFIED_COMPATIBILITY_THRESHOLD
 
     @staticmethod
     def normalize_vector(vector: dict) -> dict:

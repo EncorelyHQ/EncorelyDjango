@@ -106,6 +106,11 @@ def increment_user_swipe_count(sender, instance, created, **kwargs):
     Desacopla la lógica de gamificación de la creación del Swipe.
     """
     if created:
+        from apps.users.services import UserService # Local import to avoid circular dependency
         user = instance.user
         user.swipe_count += 1
         user.save(update_fields=['swipe_count'])
+        
+        # Si el swipe es RIGHT, recalculamos el ADN musical (VibeVector)
+        if instance.type == SwipeType.RIGHT:
+            UserService.generate_vibe_vector(user)

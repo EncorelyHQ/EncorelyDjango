@@ -66,7 +66,7 @@ class Friendship(models.Model):
         ordering = ['-updated_at']
         constraints = [
             models.CheckConstraint(
-                check=Q(user_source__lt=F('user_target')),
+                condition=Q(user_source__lt=F('user_target')),
                 name='friendship_source_lt_target',
             ),
             models.UniqueConstraint(
