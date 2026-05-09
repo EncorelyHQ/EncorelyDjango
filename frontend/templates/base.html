@@ -18,6 +18,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <a href="/" class="navbar-brand">Encorely</a>
+        {% if request.path != '/login/' and request.path != '/register/' and request.path != '/' %}
         <ul class="navbar-nav" id="navbar-menu">
             <!-- Los links activos dependerán de la vista actual -->
             <li class="nav-item"><a href="/swipe/" class="{% if request.path == '/swipe/' %}active{% endif %}" id="nav-discover">Discover</a></li>
@@ -30,6 +31,7 @@
         <div class="navbar-auth" id="auth-buttons">
             <a href="/login/" class="btn btn-outline" id="btn-login" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Login</a>
         </div>
+        {% endif %}
     </nav>
 
     <!-- Contenido Principal -->
