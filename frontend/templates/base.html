@@ -17,7 +17,9 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <a href="/" class="navbar-brand">Encorely</a>
+        <a href="/" class="navbar-brand" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="{% static 'src/img/logo-color-bisel.png' %}" alt="Encorely Logo" style="height: 45px; width: auto; object-fit: contain;">
+        </a>
         {% if request.path != '/login/' and request.path != '/register/' and request.path != '/' %}
         <ul class="navbar-nav" id="navbar-menu">
             <!-- Los links activos dependerán de la vista actual -->
