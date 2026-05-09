@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateProgress() {
         if (currentSwipes >= requiredSwipes) {
             progressFill.style.width = '100%';
-            progressText.textContent = `${currentSwipes} Swipes - ¡Radar Desbloqueado!`;
+            progressText.textContent = `${currentSwipes} Deslices - ¡Radar Desbloqueado!`;
             // Si ya cumplió y no quedan tarjetas, mostrar mensaje de radar
             if (currentSongIndex >= songs.length) {
                 radarReadyDiv.style.display = 'block';
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const percent = (currentSwipes / requiredSwipes) * 100;
             progressFill.style.width = `${percent}%`;
-            progressText.textContent = `${currentSwipes} / ${requiredSwipes} Swipes`;
+            progressText.textContent = `${currentSwipes} / ${requiredSwipes} Deslices`;
         }
     }
 

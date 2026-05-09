@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (currentSwipes < requiredSwipes && !userInfo.has_enough_swipes) {
         lockedDiv.style.display = 'block';
-        document.getElementById('radar-lock-progress-text').textContent = `${currentSwipes} / ${requiredSwipes} Swipes`;
+        document.getElementById('radar-lock-progress-text').textContent = `${currentSwipes} / ${requiredSwipes} Deslices`;
         document.getElementById('radar-lock-progress-fill').style.width = `${(currentSwipes/requiredSwipes)*100}%`;
     } else {
         contentDiv.style.display = 'block';
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${m.avatar}" alt="${m.display_name}" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid ${matchColor}; margin-bottom: 1rem; object-fit: cover;">
                 <h3 style="margin-bottom: 0.2rem;">${m.display_name}</h3>
                 <p style="color: var(--color-text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">📍 ${m.city} • ${m.concert_mood}</p>
-                <div style="font-size: 1.5rem; font-weight: 800; color: ${matchColor}; margin-bottom: 1rem;">${m.match_percentage}% Match</div>
+                <div style="font-size: 1.5rem; font-weight: 800; color: ${matchColor}; margin-bottom: 1rem;">${m.match_percentage}% Compatibilidad</div>
                 <button class="btn btn-primary" style="width: 100%; padding: 0.5rem;" onclick="connect(${m.id}, this)">Conectar</button>
             `;
             grid.appendChild(card);
