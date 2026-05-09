@@ -115,9 +115,14 @@ DATABASES = {
 
 
 # ============================================
-# CUSTOM USER MODEL
+# CUSTOM USER MODEL & AUTHENTICATION
 # ============================================
 AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = [
+    'apps.users.backends.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # ============================================
