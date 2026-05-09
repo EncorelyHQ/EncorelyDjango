@@ -29,9 +29,15 @@ class SongViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        Añade filtrado personalizado por parámetros de consulta.
+        Añade filtrado personalizado y excluye canciones ya evaluadas por el usuario.
         """
         queryset = super().get_queryset()
+        
+        # Excluir canciones que el usuario ya deslizó (para no repetir)
+        if self.request.user.is_authenticated:
+            swiped_ids = Swipe.objects.filter(user=self.request.user).values_list('song_id', flat=True)
+            queryset = queryset.exclude(id__in=swiped_ids)
+
         artist = self.request.query_params.get('artist')
         min_energy = self.request.query_params.get('min_energy')
         max_tempo = self.request.query_params.get('max_tempo')
