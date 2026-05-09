@@ -1,13 +1,12 @@
-"""
-Music — URL Configuration
-==========================
-Endpoints de canciones y swipes.
-"""
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import SongViewSet, SwipeCreateView, MySwipesView
 
-from django.urls import path
-
-app_name = 'music'
+router = DefaultRouter()
+router.register(r'songs', SongViewSet, basename='song')
 
 urlpatterns = [
-    # Se agregarán en Commit 4 de Camilo: SongViewSet, SwipeCreateView, MySwipesView
+    path('', include(router.urls)),
+    path('swipes/', SwipeCreateView.as_view(), name='swipe-create'),
+    path('swipes/my/', MySwipesView.as_view(), name='my-swipes'),
 ]

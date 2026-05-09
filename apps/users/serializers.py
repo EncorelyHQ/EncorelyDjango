@@ -12,6 +12,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import MusicVibeVector
 
+from .services import UserService
+
 User = get_user_model()
 
 
@@ -64,11 +66,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('password_confirm')
         
-        # En el Commit 6 Camilo migrará esto a UserService, por ahora usamos create_user
-        user = User.objects.create_user(**validated_data)
+        # Uso del Service Layer para la creación del usuario
+        user = UserService.create_user(validated_data)
         
-        # Inicializar el vector de vibras musicales por defecto para el nuevo usuario
-        MusicVibeVector.objects.create(user=user)
+        # El vector se inicializa automáticamente vía Service o Signal
+        UserService.generate_vibe_vector(user)
         
         return user
 

@@ -1,13 +1,17 @@
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
-
+from .permissions import IsOwnerOrReadOnly
 from .serializers import (
     UserRegistrationSerializer,
     UserProfileSerializer,
     UserUpdateSerializer,
-    CustomTokenObtainPairSerializer
+    CustomTokenObtainPairSerializer,
+    MusicVibeVectorSerializer
 )
 
 User = get_user_model()
@@ -40,6 +44,43 @@ class MeView(RetrieveUpdateAPIView):
         if self.request.method in ['PUT', 'PATCH']:
             return UserUpdateSerializer
         return UserProfileSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para CRUD completo de usuarios.
+    
+    Acciones:
+        - list: Listado de usuarios (público)
+        - retrieve: Detalle de usuario (público)
+        - update/partial_update: Solo dueño
+        - destroy: Solo dueño
+    """
+    queryset = User.objects.all()
+    permission_classes = [IsOwnerOrReadOnly]
+    
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return UserUpdateSerializer
+        return UserProfileSerializer
+
+    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
+    def vibe(self, request, pk=None):
+        """
+        Retorna el vector de ADN musical del usuario.
+        Endpoint: GET /api/users/{id}/vibe/
+        """
+        user = self.get_object()
+        vibe_vector = getattr(user, 'vibe_vector', None)
+        
+        if not vibe_vector:
+            return Response(
+                {"error": "Este usuario aún no tiene un vector de afinidad musical."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+            
+        serializer = MusicVibeVectorSerializer(vibe_vector)
+        return Response(serializer.data)
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
