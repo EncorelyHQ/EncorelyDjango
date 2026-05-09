@@ -55,6 +55,60 @@ document.addEventListener('DOMContentLoaded', () => {
     // ======== LÓGICA DE REGISTRO ========
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
+        const deptSelect = document.getElementById('reg-department');
+        const citySelect = document.getElementById('reg-city');
+
+        // 1. Cargar departamentos al iniciar
+        const loadDepartments = async () => {
+            try {
+                const response = await fetch('https://api-colombia.com/api/v1/Department');
+                const departments = await response.json();
+                
+                deptSelect.innerHTML = '<option value="">Selecciona Departamento</option>';
+                departments.sort((a, b) => a.name.localeCompare(b.name)).forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept.id;
+                    option.textContent = dept.name;
+                    deptSelect.appendChild(option);
+                });
+            } catch (err) {
+                console.error("Error cargando departamentos:", err);
+                deptSelect.innerHTML = '<option value="">Error al cargar</option>';
+            }
+        };
+
+        loadDepartments();
+
+        // 2. Cargar ciudades al cambiar departamento
+        deptSelect.addEventListener('change', async () => {
+            const deptId = deptSelect.value;
+            if (!deptId) {
+                citySelect.innerHTML = '<option value="">Selecciona un departamento primero</option>';
+                citySelect.disabled = true;
+                return;
+            }
+
+            citySelect.disabled = true;
+            citySelect.innerHTML = '<option value="">Cargando ciudades...</option>';
+
+            try {
+                const response = await fetch(`https://api-colombia.com/api/v1/Department/${deptId}/cities`);
+                const cities = await response.json();
+                
+                citySelect.innerHTML = '<option value="">Selecciona Ciudad</option>';
+                cities.sort((a, b) => a.name.localeCompare(b.name)).forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.name;
+                    option.textContent = city.name;
+                    citySelect.appendChild(option);
+                });
+                citySelect.disabled = false;
+            } catch (err) {
+                console.error("Error cargando ciudades:", err);
+                citySelect.innerHTML = '<option value="">Error al cargar</option>';
+            }
+        });
+
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -66,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 username: document.getElementById('reg-username').value,
                 email: document.getElementById('reg-email').value,
                 display_name: document.getElementById('reg-display-name').value,
-                city: document.getElementById('reg-city').value,
+                city: citySelect.value, // Usar el valor del select
                 concert_mood: document.getElementById('reg-concert-mood').value,
                 password: document.getElementById('reg-password').value,
                 password_confirm: document.getElementById('reg-password-confirm').value,
@@ -75,6 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Validar contraseñas en frontend preventivamente
             if (payload.password !== payload.password_confirm) {
                 errorDiv.textContent = "Las contraseñas no coinciden.";
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Validar ciudad seleccionada
+            if (!payload.city) {
+                errorDiv.textContent = "Por favor selecciona una ciudad.";
                 errorDiv.style.display = 'block';
                 return;
             }

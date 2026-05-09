@@ -28,8 +28,17 @@
             </div>
 
             <div class="form-group">
+                <label for="reg-department" class="form-label">Departamento</label>
+                <select id="reg-department" class="form-control" required style="background-color: var(--color-bg-dark);">
+                    <option value="">Cargando departamentos...</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
                 <label for="reg-city" class="form-label">Ciudad</label>
-                <input type="text" id="reg-city" class="form-control" required placeholder="Ej: Medellín">
+                <select id="reg-city" class="form-control" required style="background-color: var(--color-bg-dark);" disabled>
+                    <option value="">Selecciona un departamento primero</option>
+                </select>
             </div>
 
             <div class="form-group">
