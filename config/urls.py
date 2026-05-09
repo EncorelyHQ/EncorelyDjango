@@ -22,6 +22,8 @@ urlpatterns = [
     path('swipe/', TemplateView.as_view(template_name='swipe.html'), name='frontend-swipe'),
     path('radar/', TemplateView.as_view(template_name='radar.html'), name='frontend-radar'),
     path('events/', TemplateView.as_view(template_name='events.html'), name='frontend-events'),
+    path('chat/', TemplateView.as_view(template_name='chat.html'), name='frontend-chat'),
+    path('profile/', TemplateView.as_view(template_name='profile.html'), name='frontend-profile'),
 
     # ── Admin ──────────────────────────────────────────
     path('admin/', admin.site.urls),

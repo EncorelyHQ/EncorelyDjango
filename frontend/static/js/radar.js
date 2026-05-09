@@ -71,9 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // await api.post('/matches/', { target_user_id: targetId });
             setTimeout(() => {
-                btn.textContent = '¡Conectados!';
+                btn.textContent = '¡Match!';
                 btn.style.background = 'var(--color-neon-green)';
                 btn.style.color = '#000';
+                
+                // Redirigir al chat
+                setTimeout(() => {
+                    window.location.href = `/chat/?room=${targetId}`;
+                }, 800);
             }, 500);
         } catch (err) {
             btn.textContent = 'Error';
