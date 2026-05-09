@@ -1,54 +1,66 @@
-"""
-Music — Algoritmo de compatibilidad
-====================================
-VibeCalculator: similitud del coseno entre vectores de audio features (Patrón Strategy).
-
-Umbral del producto: score > 0.70 = compatibilidad certificada.
-"""
-
-from __future__ import annotations
-
-import math
-from typing import Any
-
 import numpy as np
-
-# Campos usados en la similitud (alineados con MusicVibeVector.to_dict())
-VIBE_KEYS = ('energy', 'danceability', 'valence', 'tempo')
-
-CERTIFIED_COMPATIBILITY_THRESHOLD = 0.70
-
 
 class VibeCalculator:
     """
-    Calcula la similitud entre dos vectores de vibe (0.0 a 1.0).
-
-    Patrón Strategy: la lógica de scoring está encapsulada y puede evolucionar
-    (ej. pesos por género) sin tocar los ViewSets.
+    Calculador de compatibilidad musical basado en Similitud del Coseno.
+    
+    Patrón Strategy:
+    Encapsula el algoritmo de comparación de vectores para que pueda ser
+    intercambiado o mejorado sin afectar a los servicios que lo utilizan.
     """
 
     @staticmethod
-    def normalize(vector: dict[str, Any]) -> dict[str, float]:
-        """Escala valores al rango [0, 1] por dimensión (min-max del par no disponible → clip)."""
-        out: dict[str, float] = {}
-        for k in VIBE_KEYS:
-            v = float(vector.get(k, 0.0))
-            out[k] = max(0.0, min(1.0, v))
-        return out
+    def calculate(vector_a: dict, vector_b: dict) -> float:
+        """
+        Calcula el score de compatibilidad entre dos vectores (0.0 a 1.0).
+        
+        Utiliza Similitud del Coseno sobre las 4 dimensiones core:
+        Energy, Danceability, Valence y Tempo.
+        """
+        # Convertir diccionarios a arrays de NumPy
+        a = np.array([
+            vector_a.get('energy', 0.0),
+            vector_a.get('danceability', 0.0),
+            vector_a.get('valence', 0.0),
+            vector_a.get('tempo', 0.0)
+        ])
+        
+        b = np.array([
+            vector_b.get('energy', 0.0),
+            vector_b.get('danceability', 0.0),
+            vector_b.get('valence', 0.0),
+            vector_b.get('tempo', 0.0)
+        ])
+
+        # Cálculo de Similitud del Coseno
+        # formula: (A . B) / (||A|| * ||B||)
+        dot_product = np.dot(a, b)
+        norm_a = np.linalg.norm(a)
+        norm_b = np.linalg.norm(b)
+        
+        if norm_a == 0 or norm_b == 0:
+            return 0.0
+            
+        similarity = dot_product / (norm_a * norm_b)
+        
+        # Asegurar que el resultado esté en el rango [0, 1]
+        return float(np.clip(similarity, 0.0, 1.0))
 
     @staticmethod
-    def calculate(vector_a: dict[str, Any], vector_b: dict[str, Any]) -> float:
-        """Similitud del coseno entre dos dicts de features (4 dimensiones)."""
-        a = VibeCalculator.normalize(vector_a)
-        b = VibeCalculator.normalize(vector_b)
-        va = np.array([a[k] for k in VIBE_KEYS], dtype=np.float64)
-        vb = np.array([b[k] for k in VIBE_KEYS], dtype=np.float64)
-        na = np.linalg.norm(va)
-        nb = np.linalg.norm(vb)
-        if na == 0 or nb == 0:
-            return 0.0
-        cos = float(np.dot(va, vb) / (na * nb))
-        # Manejo numérico de ruido
-        if not math.isfinite(cos):
-            return 0.0
-        return max(0.0, min(1.0, cos))
+    def is_compatible(score: float) -> bool:
+        """
+        Determina si un score cumple el umbral mínimo (70%).
+        """
+        return score >= 0.70
+
+    @staticmethod
+    def normalize_vector(vector: dict) -> dict:
+        """
+        Normaliza un vector para asegurar que todos los valores estén entre 0 y 1.
+        (Útil si se reciben datos de APIs externas con diferentes escalas)
+        """
+        return {
+            k: float(np.clip(v, 0.0, 1.0)) 
+            for k, v in vector.items() 
+            if k in ['energy', 'danceability', 'valence', 'tempo']
+        }
