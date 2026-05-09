@@ -1,3 +1,7 @@
+"""
+Integration tests for Music models and signals.
+Verifies that swipes correctly trigger DNA updates and counter increments.
+"""
 import pytest
 from django.contrib.auth import get_user_model
 from apps.music.models import Song, Swipe, SwipeType

@@ -1,3 +1,7 @@
+"""
+Unit tests for the VibeCalculator algorithm.
+Tests the mathematical correctness of the Cosine Similarity calculation.
+"""
 import pytest
 import numpy as np
 from apps.music.algorithms import VibeCalculator

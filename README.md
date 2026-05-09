@@ -11,6 +11,7 @@ Encorely es una plataforma social de **matchmaking musical** diseñada para cone
 ### 1. Backend API (Django REST Framework)
 - **Autenticación Segura**: Implementación de JSON Web Tokens (JWT) con rotación de refresh tokens (`SimpleJWT`).
 - **Arquitectura Modular**: Dividido funcionalmente en 5 aplicaciones independientes (`users`, `music`, `matches`, `chat`, `events`).
+- **DNA Musical Reactivo**: Sistema de actualización en tiempo real que recalcula el perfil musical del usuario tras cada interacción (*swipe* RIGHT).
 - **ADN Musical (MusicVibeVector)**: Un modelo de composición orientado a objetos que almacena métricas acústicas (`energy`, `danceability`, `valence`, `tempo`) para calcular afinidad algorítmica.
 - **Documentación Dinámica**: OpenAPI 3 y Swagger UI completamente funcionales en la ruta `/api/docs/`.
 - **Panel Administrativo Premium**: Secciones personalizadas para gestionar perfiles y estadísticas directamente desde el Django Admin.
@@ -99,6 +100,26 @@ EncorelyDjango/
 > - **Aplicación Web (MVP):** `http://localhost:8000/`
 > - **Documentación API:** `http://localhost:8000/api/docs/`
 > - **Django Admin:** `http://localhost:8000/admin/`
+102: 
+103: ---
+104: 
+105: ## 🧪 Pruebas Automatizadas (Pytest)
+106: 
+107: El proyecto incluye una suite de pruebas profesional para garantizar la integridad de los algoritmos y la lógica de negocio:
+108: 
+109: ```bash
+110: # Ejecutar todos los tests
+111: python3 -m pytest
+112: 
+113: # Ejecutar con reporte detallado
+114: python3 -m pytest -v
+115: ```
+116: 
+117: **Áreas cubiertas:**
+118: - `music.algorithms`: Validación matemática de la Similitud del Coseno.
+119: - `music.models`: Ciclo de vida de Swipes y señales de actualización de ADN.
+120: - `users.api`: Flujos de registro y autenticación JWT.
+121: - `matches.services`: Lógica de sugerencias y cálculo de compatibilidad.
 
 ---
 

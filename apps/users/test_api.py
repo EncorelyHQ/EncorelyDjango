@@ -1,3 +1,7 @@
+"""
+API tests for User authentication and registration.
+Verifies the integration between DRF views and the Service layer.
+"""
 import pytest
 from django.urls import reverse
 from rest_framework import status

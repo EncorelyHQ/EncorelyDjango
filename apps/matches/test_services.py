@@ -1,3 +1,7 @@
+"""
+Unit tests for the MatchService logic.
+Verifies compatibility calculations and suggestion filtering.
+"""
 import pytest
 from django.contrib.auth import get_user_model
 from apps.matches.services import MatchService
