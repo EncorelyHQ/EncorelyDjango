@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Nota: El backend todavía no tiene /api/songs/, así que por ahora simulamos
             // o hacemos una petición que devolverá 404 pero inyectamos mocks si falla.
             const response = await api.get('/songs/');
-            songs = response.results || [];
+            // Manejar tanto respuesta paginada como lista plana
+            songs = Array.isArray(response) ? response : (response.results || []);
             renderCards();
         } catch (error) {
             console.warn("Endpoints de canciones no listos, usando mocks para demostración...");
