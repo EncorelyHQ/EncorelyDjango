@@ -19,6 +19,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='login.html'), name='home'),
     path('login/', TemplateView.as_view(template_name='login.html'), name='frontend-login'),
     path('register/', TemplateView.as_view(template_name='register.html'), name='frontend-register'),
+    path('swipe/', TemplateView.as_view(template_name='swipe.html'), name='frontend-swipe'),
 
     # ── Admin ──────────────────────────────────────────
     path('admin/', admin.site.urls),
